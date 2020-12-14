@@ -13,10 +13,12 @@
 |
 */
 
-$router->get('/', function () use ($router) {
-    //return $router->app->version();
+$router->get('/', function () {
 
-    $results = app('db')->select("SELECT * FROM ");
-
-    var_dump($results);
+  return view('index', [
+    'classes' => [
+      'Matemática', 'Português', 'Inglês'
+    ]
+  ]);
 });
+
