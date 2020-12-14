@@ -15,10 +15,24 @@
 
 $router->get('/', function () {
 
+  $classes = app('db')->select("SELECT * FROM Class");
+
   return view('index', [
-    'classes' => [
-      'Matemática', 'Português', 'Inglês'
-    ]
+    'classes' => $classes
   ]);
+
 });
 
+$router->get('/classes/{id}', function ($id) {
+  $classes = app('db')->select("SELECT * FROM Class WHERE id = ?", [$id]);
+
+  if (count($classes) > 0) {
+    return view('class', [
+      'class' => $classes[0]
+    ]);
+
+  } else {
+    return "404";
+  }
+
+});

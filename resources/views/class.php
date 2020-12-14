@@ -9,16 +9,18 @@
 </head>
 <body>
   <div class="container">
-    <h1>Welcome to My Student</h1>
-    <h2>Classes</h2>
+    <h1><?php echo $class->Name ?></h1>
     <ul>
-    <?php foreach ( $classes as $class ) : ?>
       <li>
-        <a href="/classes/<?php echo $class->ID ?>">
-          <?php echo $class->Name ?>
-        </a>
+        Group: <?php echo $class->Group ?>
       </li>
-    <?php endforeach ?>
+      <li>
+        Ects: <?php echo $class->Ects ?>
+      </li>
+      <li>
+        Created At:
+        <?php echo (new DateTime($class->Created_at))->format('d/m/Y à\s H:i') ?>
+      </li>
     </ul>
   </div>
 </body>
