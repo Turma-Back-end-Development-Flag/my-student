@@ -35,7 +35,7 @@ class Car extends Vehicle implements Drivable
 }
 
 $car123 = new Car();
-$car123->drive();
+//$car123->drive();
 
 class AirPlane extends Vehicle implements Drivable, Flyable {
   public function drive()
@@ -93,6 +93,12 @@ class Airport {
     }
   }
 
+  public function add_airplane_copy(Flyable $airplane) {
+    $new_airplane = clone $airplane;
+
+    $this->add_airplane($new_airplane);
+  }
+
   public function fly_one(Flyable $airplane) {
     foreach ( $this->airplanes as $our_airplane ) {
       if ($our_airplane === $airplane) {
@@ -110,23 +116,34 @@ class Airport {
   }
 }
 
+// Comecemos o jogo!
+
+// Vamos criar um aeroporto
 $airport = new Airport();
 
+// Vamos criar dois aviões
 $airplane1 = new AirPlane();
 $airplane1->brand = "Boeing";
 
 $airplane2 = new AirPlane();
 $airplane2->brand = "Airbus";
 
-$airport->add_airplane($airplane1);
+$airport->add_airplane_copy($airplane1);
 $airport->add_airplane($airplane2);
 
-//$airport->fly_all();
-//$airport->fly_one($airplane1);
+$airplane1->brand = "Batatas";
 
+var_dump($airport->airplanes);
+
+//$airport->fly_all();
+
+$airport->fly_one($airplane1);
+
+/*
 $car1 = new Car();
 $airport->add_car($car1);
 $airport->add_car($airplane1);
 
 $airport->drive_cars();
 
+*/

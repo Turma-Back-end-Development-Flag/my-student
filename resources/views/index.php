@@ -20,6 +20,7 @@
       </li>
     <?php endforeach ?>
     </ul>
+    <a href="/classes/new">Add new class</a>
   </div>
 </body>
 </html>

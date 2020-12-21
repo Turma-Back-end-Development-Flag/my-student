@@ -23,7 +23,23 @@ $router->get('/', function () {
 
 });
 
+$router->get('/classes/new', function () {
+
+  return view('new-class');
+});
+
+$router->post('/classes/new', function (Illuminate\Http\Request $request) {
+
+  app('db')->insert(
+    "INSERT INTO Class (`ID`, `Name`, `Group`, `Ects`) VALUES (uuid(), ?, ?, ?)",
+    array_values($request->all())
+  );
+
+  return redirect('/');
+});
+
 $router->get('/classes/{id}', function ($id) {
+
   $classes = app('db')->select("SELECT * FROM Class WHERE id = ?", [$id]);
 
   if (count($classes) > 0) {
@@ -35,4 +51,13 @@ $router->get('/classes/{id}', function ($id) {
     return "404";
   }
 
+});
+
+
+
+$router->get('/people/', function () {
+
+  $person = new App\Models\Person('123', "John Doe", 123);
+
+  dd($person);
 });
