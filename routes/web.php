@@ -18,39 +18,40 @@ $router->get('/', function () {
   $classes = app('db')->select("SELECT * FROM Class");
 
   return view('index', [
-    'classes' => $classes
+    'title'   => 'My Student',
+    'classes' => $classes,
   ]);
 
 });
 
-$router->get('/classes/new', function () {
+/**
+ * Group for classes
+ */
+$router->group([
+  'prefix' => 'classes'
+], function () use ($router) {
 
-  return view('new-class');
-});
+  $router->get('/', [
+    'uses' => 'ClassesController@list',
+    'as' => 'list_classes'
+  ]);
 
-$router->post('/classes/new', function (Illuminate\Http\Request $request) {
+  $router->get('/new', [
+    'as' => 'new_classe',
+    function () {
+      return view('classes.new');
+    }
+  ]);
 
-  app('db')->insert(
-    "INSERT INTO Class (`ID`, `Name`, `Group`, `Ects`) VALUES (uuid(), ?, ?, ?)",
-    array_values($request->all())
-  );
+  $router->post('/new', [
+    'uses' => 'ClassesController@store',
+    'as' => 'store_classe'
+  ]);
 
-  return redirect('/');
-});
-
-$router->get('/classes/{id}', function ($id) {
-
-  $classes = app('db')->select("SELECT * FROM Class WHERE id = ?", [$id]);
-
-  if (count($classes) > 0) {
-    return view('class', [
-      'class' => $classes[0]
-    ]);
-
-  } else {
-    return "404";
-  }
-
+  $router->get('/{id}', [
+    'uses' => 'ClassesController@show',
+    'as' => 'show_classe'
+  ]);
 });
 
 
