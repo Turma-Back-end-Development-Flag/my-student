@@ -20,7 +20,7 @@ class ClassesController extends Controller
 
   public function show($id)
   {
-    $classes = app('db')->select("SELECT * FROM Class WHERE id = ?", [$id]);
+    $classes = app('db')->select("SELECT * FROM Class WHERE id = ?", [ $id ]);
 
     if (count($classes) > 0) {
       return view('classes.show', [

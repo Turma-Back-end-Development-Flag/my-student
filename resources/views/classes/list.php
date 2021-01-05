@@ -5,10 +5,10 @@
       <h4>Classes</h4>
     </li>
 
-    <?php foreach ( $classes as $class ) : ?>
+    <?php foreach ( $classes as $c ) : ?>
       <li>
-        <a href="/classes/<?php echo $class->ID ?>" class="collection-item">
-          <?php echo $class->Name ?>
+        <a href="/classes/<?php echo $c->ID ?>" class="collection-item">
+          <?php echo $c->Name ?>
         </a>
       </li>
     <?php endforeach ?>

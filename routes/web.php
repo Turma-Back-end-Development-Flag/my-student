@@ -50,15 +50,30 @@ $router->group([
 
   $router->get('/{id}', [
     'uses' => 'ClassesController@show',
-    'as' => 'show_classe'
+    'as'   => 'show_classe'
   ]);
 });
 
 
+$router->group([
+  'prefix' => 'people',
+], function () use ( $router ) {
 
-$router->get('/people/', function () {
+  $router->get('/', [
+    'uses' => 'PeopleController@list',
+    'as'   => 'list_people',
+  ]);
 
-  $person = new App\Models\Person('123', "John Doe", 123);
+  $router->get('/new', function () {
 
-  dd($person);
+  });
+
+  $router->post('/new', function () {
+
+  });
+
+  $router->get('/{id}', function () {
+
+  });
+
 });
