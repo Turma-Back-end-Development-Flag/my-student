@@ -64,16 +64,21 @@ $router->group([
     'as'   => 'list_people',
   ]);
 
-  $router->get('/new', function () {
+  $router->get('/new', [
+    'as'   => 'new_person',
+    function () {
+      return view('people.new');
+    }
+  ]);
 
-  });
+  $router->post('/new', [
+    'uses'  => 'PeopleController@store',
+    'as'    => 'store_person',
+  ]);
 
-  $router->post('/new', function () {
-
-  });
-
-  $router->get('/{id}', function () {
-
-  });
+  $router->get('/{id}', [
+    'uses'  => 'PeopleController@show',
+    'as'    => 'show_person',
+  ]);
 
 });
