@@ -15,16 +15,9 @@ class PeopleController extends Controller
     ]);
   }
 
-  public function store(Request $request)
+  private function storeEmailMessage()
   {
-    $input = $request->all();
-
-    app('db')->insert(
-      'INSERT INTO Person (`ID`, `Name`, `Email`) VALUES(uuid(), ?, ?)',
-      array_values( $input )
-    );
-
-    $message = <<<EOL
+    return <<<EOL
     Hello ${input['Name']},
 
     This email is to inform you about your new registration.
@@ -32,9 +25,39 @@ class PeopleController extends Controller
     Kind regards,
     @The Team
     EOL;
+  }
 
-    mail($input['Email'], 'New registration', $message);
+  // Model
+  private function insertPersonInDb($name, $email)
+  {
+    app('db')->insert(
+      'INSERT INTO Person (`ID`, `Name`, `Email`) VALUES(uuid(), ?, ?)',
+      [$name, $email]
+    );
+  }
 
+  // Model
+  private function sendEmailWhenPersonIsCreated($email)
+  {
+    $message = $this->storeEmailMessage();
+    mail($email, 'New registration', $message);
+  }
+
+  // Interactor (Model)
+  private function storePerson($input)
+  {
+    $this->insertPersonInDb(...$input);
+    $this->sendEmailWhenPersonIsCreated($input['Email']);
+  }
+
+  // Controller
+  public function store(Request $request)
+  {
+    // tratamento de dados de utilizador
+    $input = $request->all();
+    // invoca lógica de negócio
+    $this->storePerson($input);
+    // retornar view (lógica de apresentação)
     return redirect('/people');
   }
 
