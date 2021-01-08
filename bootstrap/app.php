@@ -60,6 +60,7 @@ $app->singleton(
 */
 
 $app->configure('app');
+
 $app->configure('mail');
 
 $app->alias('mail.manager', Illuminate\Mail\MailManager::class);

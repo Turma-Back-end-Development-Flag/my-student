@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class PeopleController extends Controller
 {
@@ -15,18 +16,6 @@ class PeopleController extends Controller
     ]);
   }
 
-  private function storeEmailMessage()
-  {
-    return <<<EOL
-    Hello ${input['Name']},
-
-    This email is to inform you about your new registration.
-
-    Kind regards,
-    @The Team
-    EOL;
-  }
-
   // Model
   private function insertPersonInDb($name, $email)
   {
@@ -37,17 +26,32 @@ class PeopleController extends Controller
   }
 
   // Model
-  private function sendEmailWhenPersonIsCreated($email)
+  private function sendEmailWhenPersonIsCreated($name, $email)
   {
-    $message = $this->storeEmailMessage();
-    mail($email, 'New registration', $message);
+    $this->sendEmailWhenPersonIsUpdatedOrCreated($name, $email, "created");
+  }
+
+  private function sendEmailWhenPersonIsUpdatedOrCreated($name, $email, $action)
+  {
+    $action === 'created'
+      ? 'New registration'
+      : 'Updated registration';
+
+    Mail::send('people.emails.create', [
+      'name' => $name,
+
+    ], function ($mail) use ($email, $action) {
+      $mail
+        ->to($email)
+        ->subject($action);
+    });
   }
 
   // Interactor (Model)
   private function storePerson($input)
   {
-    $this->insertPersonInDb(...$input);
-    $this->sendEmailWhenPersonIsCreated($input['Email']);
+    $this->insertPersonInDb(...array_values($input));
+    $this->sendEmailWhenPersonIsCreated(...array_values($input));
   }
 
   // Controller
