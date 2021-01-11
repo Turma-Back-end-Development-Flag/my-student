@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Person;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PeopleController extends Controller
 {
   public function list()
   {
-    $result = app('db')->select('SELECT * FROM Person');
+    // $result = app('db')->select('SELECT * FROM Person');
+    $result = Person::all();
 
     return view('people.list', [
       'people' => $result,
@@ -67,11 +70,12 @@ class PeopleController extends Controller
 
   public function show($id)
   {
-    $result = app('db')->select('SELECT * FROM Person WHERE id = ?', [$id]);
+    //$result = app('db')->select('SELECT * FROM Person WHERE id = ?', [$id]);
+    $result = Person::where('ID', $id)->first();
 
-    if (count($result) > 0) {
+    if ($result) {
       return view('people.show', [
-        'person' => $result[0]
+        'person' => $result
       ]);
 
     } else {

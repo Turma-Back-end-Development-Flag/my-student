@@ -2,16 +2,13 @@
 
 namespace App\Models;
 
-class Person {
+use Illuminate\Database\Eloquent\Model;
 
-  public $ID;
-  public $Name;
-  public $Number;
+class Person extends Model
+{
+  const CREATED_AT = 'Created_at';
+  const UPDATED_AT = 'Modified_at';
 
-  public function __construct(string $ID, string $Name, int $Number)
-  {
-    $this->ID = $ID;
-    $this->Name = $Name;
-    $this->Number = $Number;
-  }
+  public $table = 'Person';
+  public $guarded = [ 'ID' ];
 }
