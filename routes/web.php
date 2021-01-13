@@ -15,7 +15,7 @@
 
 $router->get('/', function () {
 
-  $classes = app('db')->select("SELECT * FROM Class");
+  $classes = app('db')->select("SELECT * FROM class");
 
   return view('index', [
     'title'   => 'My Student',

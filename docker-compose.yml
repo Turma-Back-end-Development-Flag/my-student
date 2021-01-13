@@ -11,6 +11,11 @@ services:
     volumes:
       - ./database/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
 
+  redis:
+    image: 'bitnami/redis:latest'
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+
   adminer:
     image: adminer
     restart: always

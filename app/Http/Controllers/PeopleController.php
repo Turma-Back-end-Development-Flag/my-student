@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Person;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PeopleController extends Controller
@@ -20,12 +22,23 @@ class PeopleController extends Controller
   }
 
   // Model
-  private function insertPersonInDb($name, $email)
+  private function insertPersonInDb($name, $email, $avatar)
   {
-    app('db')->insert(
-      'INSERT INTO Person (`ID`, `Name`, `Email`) VALUES(uuid(), ?, ?)',
-      [$name, $email]
-    );
+    $person = new Person();
+
+    $person->uid = Str::uuid();
+    $person->name = $name;
+    $person->email = $email;
+    $person->avatar_filename = $avatar;
+
+    $person->save();
+
+    return $person;
+
+    // app('db')->insert(
+    //   'INSERT INTO Person (`uid`, `name`, `email`, `avatar_filename`) VALUES(uuid(), ?, ?, ?)',
+    //   [$name, $email, $avatar]
+    // );
   }
 
   // Model
@@ -60,10 +73,27 @@ class PeopleController extends Controller
   // Controller
   public function store(Request $request)
   {
+    // file upload
+    $avatar = $request->file('avatar');
+
+    if ($avatar) {
+      $dirname = base_path('public/uploads');
+      $filename = Str::uuid();
+      $extension = $avatar->getClientOriginalExtension();
+      $avatar = $avatar->move($dirname, "$filename.$extension");
+    }
+
     // tratamento de dados de utilizador
     $input = $request->all();
+
     // invoca lógica de negócio
-    $this->storePerson($input);
+    $this->storePerson([
+      'name' => $input['name'],
+      'email' => $input['email'],
+      'avatar' => $avatar ? $avatar->getFilename() : null,
+    ]);
+
+
     // retornar view (lógica de apresentação)
     return redirect('/people');
   }
@@ -71,7 +101,7 @@ class PeopleController extends Controller
   public function show($id)
   {
     //$result = app('db')->select('SELECT * FROM Person WHERE id = ?', [$id]);
-    $result = Person::where('ID', $id)->first();
+    $result = Person::where('uid', $id)->first();
 
     if ($result) {
       return view('people.show', [

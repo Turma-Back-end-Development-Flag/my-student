@@ -11,7 +11,7 @@ class ClassesController extends Controller
 {
   public function list()
   {
-    $classes = app('db')->select("SELECT * FROM Class");
+    $classes = app('db')->select("SELECT * FROM class");
 
     return view('classes.list', [
       'classes' => $classes,
@@ -20,7 +20,7 @@ class ClassesController extends Controller
 
   public function show($id)
   {
-    $classes = app('db')->select("SELECT * FROM Class WHERE id = ?", [ $id ]);
+    $classes = app('db')->select("SELECT * FROM class WHERE uid = ?", [ $id ]);
 
     if (count($classes) > 0) {
       return view('classes.show', [
@@ -35,7 +35,7 @@ class ClassesController extends Controller
   public function store(Request $request)
   {
     app('db')->insert(
-      "INSERT INTO Class (`ID`, `Name`, `Group`, `Ects`) VALUES (uuid(), ?, ?, ?)",
+      "INSERT INTO class (`uid`, `name`, `group`, `ects`) VALUES (uuid(), ?, ?, ?)",
       array_values($request->all())
     );
 

@@ -7,8 +7,8 @@
 
     <?php foreach ( $people as $person ) : ?>
       <li>
-        <a href="/people/<?php echo $person->ID ?>" class="collection-item">
-          <?php echo $person->Name ?> (<?php echo $person->Email ?>)
+        <a href="/people/<?php echo $person->uid ?>" class="collection-item">
+          <?php echo $person->name ?> (<?php echo $person->email ?>)
         </a>
       </li>
     <?php endforeach ?>
