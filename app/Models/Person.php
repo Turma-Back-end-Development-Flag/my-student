@@ -15,4 +15,9 @@ class Person extends Model
   {
     return $this->name;
   }
+
+  public function getEmailCard()
+  {
+    return "$this->name <$this->email>";
+  }
 }

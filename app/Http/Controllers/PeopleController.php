@@ -73,6 +73,24 @@ class PeopleController extends Controller
   // Controller
   public function store(Request $request)
   {
+    // validations
+    $validation = Validator::make($request->all(), [
+      'name' => 'required|min:2|max:255',
+      'email' => 'required|unique:people,email|email|min:6|max:255',
+      'nif' => 'required|min:9|max:9|regex:/^[0,1,2,5,9][\d]+/'
+    ], [
+      'email.min' => 'Deverá ter mais e 6 caracteres.',
+    ]);
+
+    if ($validation->fails()) {
+      return view('people.new', [
+        'name' => $request->input('name'),
+        'email' => $request->input('email'),
+        'nif' => $request->input('nif'),
+        'error' => $validation->errors()->first(),
+      ]);
+    }
+
     // file upload
     $avatar = $request->file('avatar');
 

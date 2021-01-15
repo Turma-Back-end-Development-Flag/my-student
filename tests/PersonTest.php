@@ -9,9 +9,21 @@ class PersonTest extends TestCase
 {
   public function testGetName()
   {
-    $case = new Person();
-    $case->name = 'John Doe';
+    $subject = new Person();
+    $subject->name = 'John Doe';
 
-    $this->assertEquals('John Doe', $case->getName());
+    $this->assertEquals('John Doe', $subject->getName());
+  }
+
+  public function testGetEmailCard()
+  {
+    $subject = new Person();
+    $subject->name = 'Jane Doe';
+    $subject->email = 'jane.doe@example.com';
+
+    $this->assertEquals(
+      'Jane Doe <jane.doe@example.com>',
+      $subject->getEmailCard()
+    );
   }
 }

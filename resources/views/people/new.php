@@ -4,11 +4,22 @@
     <form method="post" enctype="multipart/form-data">
       <p>
         <label>Name</label>
-        <input name="name" />
+        <input name="name" minlength="2" maxlength="255"
+         value="<?php echo isset($name) ? $name : null ?>"
+         required />
       </p>
       <p>
         <label>Email</label>
-        <input name="email" type="email" />
+        <input name="email" type="email"
+          value="<?php echo isset($email) ? $email : null ?>"
+          required />
+      </p>
+      <p>
+        <label>NIF</label>
+        <input name="nif" minlength="9" maxlength="9"
+         value="<?php echo isset($nif) ? $nif : null ?>"
+         pattern="[0,1,2,3,5,9][\d]+"
+         required />
       </p>
       <p>
         <label>Upload Avatar</label>
@@ -23,6 +34,7 @@
         </div>
 
       <?php endif; ?>
+
     </form>
 
 <?php echo view('common.footer') ?>
