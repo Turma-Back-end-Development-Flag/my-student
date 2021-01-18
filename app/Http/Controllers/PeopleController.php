@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\ShowIdNotFoundException;
 use App\Models\Person;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -127,7 +128,7 @@ class PeopleController extends Controller
       ]);
 
     } else {
-      return "404";
+      throw new ShowIdNotFoundException("Person");
     }
   }
 }
