@@ -1,6 +1,21 @@
 <?php
 
+/*
+
+Este é um pequeno exercício de criação de uma microframework.
+Poderiamos fazer algo mais complexo.
+
+Recomendo olharem para a solução Bramus Router neste link:
+https://github.com/bramus/router
+
+É das implementações de Router mais pequenas mas mesmo assim
+usáveis em PHP. Pode ser útil para aplicações pequenas.
+
+*/
+
 include "./router.php";
+
+/* Estas variáveis globais de PHP são úteis */
 
 // $_SERVER;
 // $_SESSION;
@@ -12,6 +27,7 @@ include "./router.php";
 session_start();
 
 router(function (array $input) {
+  // Este switch declara as rotas, tal como o routes/web.php
   switch ($input['type']) {
     case 'index':
       ?>

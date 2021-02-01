@@ -1,9 +1,9 @@
-<?php echo view('common.header') ?>
+<?php echo view('common.header'); ?>
 
   <h1><?php echo $person->name ?></h1>
 
-  <?php if ($person->avatar_filename) : ?>
-    <img src="/uploads/<?php echo $person->avatar_filename ?>" width="200" />
+  <?php if ($person->avatar) : ?>
+    <img src="/uploads/<?php echo $person->avatar->getFilename() ?>" width="200" />
   <?php endif; ?>
 
   <ul>
