@@ -15,6 +15,7 @@ class CreatePerson
     }
 
     $person = Person::create($name, $email, $avatar);
+    // Send event PersonCreated
     SendEmailWhenPersonIsUpdatedOrCreated::call($name, $email, "created");
 
     return $person;

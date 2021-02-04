@@ -1,0 +1,25 @@
+{
+  "Definitions": {
+    "DefaultAvatar": {
+      "Url": "https://eu-avatars.com/random.png"
+    }
+  },
+  "People": [
+    {
+      "name": "Vitor Carvalho",
+      "id": 192837465,
+      "active": true,
+      "avatar": {
+        "Url": "https://eu-avatars.com/random.png"
+      }
+    },
+    {
+      "name": "John Doe",
+      "id": 192837465,
+      "active": true,
+      "avatar": {
+        "url": "https://eu-avatars.com/john-doe.png"
+      }
+    }
+  ]
+}

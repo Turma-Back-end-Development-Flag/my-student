@@ -1,7 +1,8 @@
 <?php
 
 $router->group([
-  'prefix' => 'api'
+  'prefix' => 'api',
+  'middleware' => 'auth',
 ], function() use ($router) {
 
   $router->group([

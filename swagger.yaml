@@ -1,0 +1,66 @@
+swagger: "2.0"
+info:
+  version: "1.0"
+  title: "MyStudent API"
+host: "mystudent.example"
+basePath: "/api/v1"
+tags:
+- name: "People"
+  description: "People management routes"
+schemes:
+- "https"
+paths:
+  /people:
+    get:
+      tags:
+      - "People"
+      summary: "List people data"
+      operationId: "listPeople"
+      produces:
+      - "application/hal+json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: object
+            properties:
+              _links:
+                type: object
+                properties:
+                  self:
+                    type: string
+                    example: "/api/v1/people?page=1"
+              _embedded:
+                type: object
+                properties:
+                  people: 
+                    type: array
+                    items:
+                      $ref: '#/definitions/Person'
+
+definitions:
+  Date:
+    type: string
+    example: "2020-04-06T13:25:14.185Z"
+    
+  Person:
+    type: object
+    required:
+      - uid
+      - email
+    properties:
+      uid:
+        type: string
+        example: "18cf5685-7db8-4202-bf21-ea65c6fffe3b"
+      number:
+        type: number
+        example: 20
+      name:
+        type: string
+        example: John Doe
+      email:
+        type: string
+      created_at:
+        $ref: "#/definitions/Date"
+      updated_at:
+        $ref: "#/definitions/Date"
